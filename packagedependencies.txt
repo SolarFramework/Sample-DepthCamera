@@ -10,5 +10,6 @@ opencv|3.4.3|opencv|thirdParties|http://repository.b-com.com/
 spdlog|0.14.0|spdlog|thirdParties|http://repository.b-com.com/
 eigen|3.3.5|eigen|thirdParties|http://repository.b-com.com/amc-generic
 freeglut|3.0.0|freeglut|thirdParties|http://repository.b-com.com/amc-generic
-pcl|1.9.1|pcl|thirdParties|http://repository.b-com.com/amc-generic
+pcl|1.9.1|pcl|thirdparties|http://repository.b-com.com/amc-generic
+flann|1.8.4|flann|thirdparties|http://repository.b-com.com/amc-generic
 realsense2|2.16.5|realsense2|thirdParties|http://repository.b-com.com/amc-generic

@@ -6,6 +6,10 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="b05f3dbb-f93d-465c-aee1-fb58e1480c42" description="IImageViewer" name="IImageViewer"/>
         </component>
+		<component uuid="fd7fb607-144f-418c-bcf2-f7cf71532c22" description="SolAR::MODULES::OPENCV::SolARImageConvertorOpencv component" name="SolARImageConvertorOpencv">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="9c982719-6cb4-4831-aa88-9e01afacbd16" description="SolAR::api::image::IImageConvertor" name="IImageConvertor"/>
+        </component>
     </module>
 	
 	 <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenGL/0.5.0/lib/x86_64/shared" description="Module OpenGL">

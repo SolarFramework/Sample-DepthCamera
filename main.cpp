@@ -35,8 +35,11 @@
 #include "xpcf/xpcf.h"
 
 #include "api/input/devices/IRGBDCamera.h"
+#include "api/image/IImageConvertor.h"
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"
+
+#define DEPTH_SCALE 255.0f/65535.0f
 
 using namespace SolAR;
 using namespace SolAR::datastructure;
@@ -80,6 +83,7 @@ int main(int argc, char **argv){
 
     // component declaration and creation
     SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<RGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
+    SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
     SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>()->bindTo<display::IImageViewer>();
     SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>()->bindTo<display::IImageViewer>();
     //SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
@@ -87,15 +91,16 @@ int main(int argc, char **argv){
     // declarations of data structures used to exange information between components
     SRef<Image> imageRGB;
     SRef<Image> imageDepth;
+    SRef<Image> imageConvertedDepth;
 
     camera->startRGBD();
 
     // Display the matches and the 3D point cloud
     while (true){
         camera->getNextRGBDFrame(imageRGB, imageDepth);
-
+        imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
-             viewerDepth->display(imageDepth) == FrameworkReturnCode::_STOP)
+             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

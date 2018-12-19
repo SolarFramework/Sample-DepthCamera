@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<xpcf-registry>
+    
+	<module uuid="15e1990b-86b2-445c-8194-0cbe80ede970" name="SolARModuleOpenCV" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenCV/0.5.1/lib/x86_64/shared" description="OpenCV modules">0
+		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b" description="SolARImageViewerOpencv" name="SolARImageViewerOpencv">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="b05f3dbb-f93d-465c-aee1-fb58e1480c42" description="IImageViewer" name="IImageViewer"/>
+        </component>
+    </module>
+	
+	 <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenGL/0.5.0/lib/x86_64/shared" description="Module OpenGL">
+        <component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459" description="SolAR3DPointsViewerOpengl" name="SolAR3DPointsViewerOpengl">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="575d365a-9a27-11e8-9eb6-529269fb1459" description="I3DPointsViewer" name="I3DPointsViewer"/>
+        </component>
+    </module> 
+	
+	<module uuid="63b92983-f790-448b-8124-3b686d481aaf" name="SolARModuleRealSense" path="$BCOMDEVROOT/bcomBuild/SolARModuleRealSense/0.1.0/lib/x86_64/shared" description="RealSense modules">0
+		<component uuid="315dfef4-26f3-4a79-a809-874b1006cd88" description="A component to handle a Real Sense RGBD Camera" name="RGBDCamera">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="5bf56174-94fd-4256-8eb7-b653ea3b8c34" description="Interface for RGBD camera" name="IRGBDCamera"/>
+				<interface uuid="6dfcb3c7-3432-418b-8f69-e66df55bbb67" description="Interface for Depth camera" name="IDepthCamera"/>
+				<interface uuid="5DDC7DF0-8377-437F-9C81-3643F7676A5B" description="SolAR::ICamera interface" name="ICamera"/>
+        </component>
+    </module>
+    
+	<module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools"  path="$BCOMDEVROOT/bcomBuild/SolARModuleTools/0.5.0/lib/x86_64/shared" description="Module Tools">
+		<component uuid="09205b96-7cba-4415-bc61-64744bc26222" description="SolARMapFilterOpencv" name="SolARMapFilterOpencv">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="e0d6cc82-6af2-493d-901a-2384fca0b16f" description="IMapFilter" name="IMapFilter"/>
+        </component>
+	</module>
+	
+	<configuration>
+		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b"> <!-- SolARImageViewerOpencv -->
+			<property name="title" type="string" value=""/>
+			<property name="exitKey" type="Integer" value="27"/>
+			<property name="width" type="Integer" value="1280"/>
+			<property name="height" type="Integer" value="480"/>
+		</component>
+		<component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459"> <!-- SolAR3DPointsViewerOpengl -->
+            <property name="title" type="string" value="Points Cloud"/>
+			<property name="width" type="UnsignedInteger" value="1280"/>
+			<property name="height" type="UnsignedInteger" value="960"/>
+			<property name="backgroundColor" type="UnsignedInteger">
+				<value>0</value>
+				<value>0</value>
+				<value>0</value>
+			</property>
+			<property name="fixedPointsColor" type="UnsignedInteger" value="1"/>
+			<property name="pointsColor" type="UnsignedInteger">
+				<value>0</value>
+				<value>255</value>
+				<value>0</value>
+			</property>
+			<property name="cameraColor" type="UnsignedInteger">
+				<value>255</value>
+				<value>255</value>
+				<value>255</value>
+			</property>
+			<property name="drawCameraAxis" type="UnsignedInteger" value="1"/>
+			<property name="drawSceneAxis" type="UnsignedInteger" value="1"/>
+			<property name="drawWorldAxis" type="UnsignedInteger" value="1"/>
+			<property name="axisScale" type="Float" value="1.0"/>
+			<property name="pointSize" type="Float" value="3.0"/>
+			<property name="cameraScale" type="Float" value="1.0"/>
+			<property name="zoomSensitivity" type="Float" value="10.0"/>
+			<property name="exitKey" type="Integer" value="27"/>
+        </component>
+    </configuration>
+</xpcf-registry>

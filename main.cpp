@@ -88,7 +88,7 @@ int main(int argc, char **argv){
     SRef<Image> imageRGB;
     SRef<Image> imageDepth;
 
-    camera->start();
+    camera->startRGBD();
 
     // Display the matches and the 3D point cloud
     while (true){

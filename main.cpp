@@ -112,7 +112,7 @@ int main(int argc, char **argv){
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
              viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
-             viewer3DPoints->display(pointCloud, Transform3Df::Identity()) == FrameworkReturnCode::_STOP)
+             viewer3DPoints->display(pointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

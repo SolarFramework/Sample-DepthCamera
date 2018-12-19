@@ -36,10 +36,16 @@
 	</module>
 	
 	<configuration>
-		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b"> <!-- SolARImageViewerOpencv -->
-			<property name="title" type="string" value=""/>
+		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b" name="color"> <!-- SolARImageViewerOpencv -->
+			<property name="title" type="string" value="color"/>
 			<property name="exitKey" type="Integer" value="27"/>
 			<property name="width" type="Integer" value="1280"/>
+			<property name="height" type="Integer" value="720"/>
+		</component>
+		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b" name="depth"> <!-- SolARImageViewerOpencv -->
+			<property name="title" type="string" value="depth"/>
+			<property name="exitKey" type="Integer" value="27"/>
+			<property name="width" type="Integer" value="640"/>
 			<property name="height" type="Integer" value="480"/>
 		</component>
 		<component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459"> <!-- SolAR3DPointsViewerOpengl -->

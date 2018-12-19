@@ -39,7 +39,7 @@
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"
 
-#define DEPTH_SCALE 255.0f/65535.0f
+#define DEPTH_SCALE 4.f * 255.0f/65535.0f
 
 using namespace SolAR;
 using namespace SolAR::datastructure;
@@ -84,14 +84,14 @@ int main(int argc, char **argv){
     // component declaration and creation
     SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<RGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
     SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
-    SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>()->bindTo<display::IImageViewer>();
-    SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>()->bindTo<display::IImageViewer>();
+    SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
+    SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
     //SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
 
     // declarations of data structures used to exange information between components
     SRef<Image> imageRGB;
     SRef<Image> imageDepth;
-    SRef<Image> imageConvertedDepth;
+    SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
 
     camera->startRGBD();
 

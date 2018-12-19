@@ -25,6 +25,7 @@
 
 #include "SolARModuleOpencv_traits.h"
 #include "SolARModuleRealSense_traits.h"
+#include "SolARModulePCL_traits.h"
 #include "SolARModuleOpengl_traits.h"
 #include "SolARModuleTools_traits.h"
 
@@ -35,6 +36,7 @@
 #include "xpcf/xpcf.h"
 
 #include "api/input/devices/IRGBDCamera.h"
+#include "api/pointCloud/IPCFilterCentroid.h"
 #include "api/image/IImageConvertor.h"
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"
@@ -45,6 +47,7 @@ using namespace SolAR;
 using namespace SolAR::datastructure;
 using namespace SolAR::api;
 using namespace SolAR::MODULES::OPENCV;
+using namespace SolAR::MODULES::PCL;
 using namespace SolAR::MODULES::REALSENSE;
 using namespace SolAR::MODULES::TOOLS;
 #ifndef USE_FREE
@@ -84,23 +87,32 @@ int main(int argc, char **argv){
     // component declaration and creation
     SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<RGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
     SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
+    SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<PCFilter>()->bindTo<pointCloud::IPCFilterCentroid>();
     SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
     SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
-    //SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
+    SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
 
     // declarations of data structures used to exange information between components
     SRef<Image> imageRGB;
     SRef<Image> imageDepth;
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
+    SRef<PointCloud> pointCloud;
+    SRef<PointCloud> filteredPointCloud;
+    SRef<Point3Df> centroid = xpcf::utils::make_shared<Point3Df>(0.0f, 0.0f, 2.0f);
 
     camera->startRGBD();
 
     // Display the matches and the 3D point cloud
     while (true){
         camera->getNextRGBDFrame(imageRGB, imageDepth);
+        camera->getPointCloud(pointCloud);
+
+        pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
+
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
-             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP)
+             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
+             viewer3DPoints->display(pointCloud, Transform3Df::Identity()) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

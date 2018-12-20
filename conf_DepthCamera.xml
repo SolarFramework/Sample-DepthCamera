@@ -44,6 +44,14 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="3e068943-5230-4e6c-abd7-959f293f9829" description="Interface for point cloud filtering" name="IPCFilter"/>
         </component>
+		<component uuid="a9b28074-f29b-480a-bbf4-81085a5b64cf" description="A Iterative Closest Point component based on PCL" name="ICP">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="f2873a5d-0f9f-43a3-816c-1850ea7fe32d" description="Estimate the 3D pose of a camera according to 3D-3D correspondences" name="I3DTransformFinderFrom3D3D"/>
+        </component>
+		<component uuid="e3e0e76f-6cf3-4848-b267-633550a52633" description="A Iterative Closest Point component based on PCL which use normals" name="ICPNormals">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="f2873a5d-0f9f-43a3-816c-1850ea7fe32d" description="Estimate the 3D pose of a camera according to 3D-3D correspondences" name="I3DTransformFinderFrom3D3D"/>
+        </component>
 	</module>
 	
 	<configuration>

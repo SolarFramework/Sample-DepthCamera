@@ -1,6 +1,6 @@
 SolARFramework|0.5.1|SolARFramework|bcomBuild|url_repo_artifactory
 SolARModuleOpenCV|0.5.1|SolARModuleOpenCV|bcomBuild|url_repo_artifactory
-SolARModuleTools|0.5.0|SolARModuleTools|bcomBuild|url_repo_artifactory
+SolARModuleTools|0.5.1|SolARModuleTools|bcomBuild|url_repo_artifactory
 SolARModuleOpenGL|0.5.1|SolARModuleOpenGL|bcomBuild|url_repo_artifactory
 SolARModuleRealSense|0.1.0|SolARModuleRealSense|bcomBuild|url_repo_artifactory
 SolARModulePCL|0.1.0|SolARModulePCL|bcomBuild|url_repo_artifactory

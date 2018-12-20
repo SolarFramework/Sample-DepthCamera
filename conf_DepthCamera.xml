@@ -10,6 +10,10 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="9c982719-6cb4-4831-aa88-9e01afacbd16" description="SolAR::api::image::IImageConvertor" name="IImageConvertor"/>
         </component>
+		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="SolAR2DOverlayOpencv" description="SolAR2DOverlayOpencv">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
+                <interface uuid="62b8b0b5-9344-40e6-a288-e609eb3ff0f1" name="I2DOverlay" description="I2DOverlay"/>
+        </component>
     </module>
 	
 	 <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenGL/0.5.1/lib/x86_64/shared" description="Module OpenGL">
@@ -52,6 +56,10 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="f2873a5d-0f9f-43a3-816c-1850ea7fe32d" description="Estimate the 3D pose of a camera according to 3D-3D correspondences" name="I3DTransformFinderFrom3D3D"/>
         </component>
+		<component uuid="e3e0e76f-6cf3-4848-b267-633550a52633" description="A Iterative Closest Point component based on PCL which use normals" name="ICPNormals">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="1abd8117-87d3-4c6c-8fb6-c2fdb7359ee2" description="Load a point cloud from a file" name="IPointCloudLoader"/>
+        </component>
 	</module>
 	
 	<configuration>
@@ -66,6 +74,14 @@
 			<property name="exitKey" type="Integer" value="27"/>
 			<property name="width" type="Integer" value="640"/>
 			<property name="height" type="Integer" value="480"/>
+		</component>
+		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="contours"> <!-- SolAROverlay2DOpencv -->
+			<property name="color" type="UnsignedInteger">
+                    <value>128</value>
+                    <value>128</value>
+                    <value>128</value>
+            </property>
+			<property name="thickness" type="UnsignedInteger" value="3"/> 
 		</component>
 		<component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459"> <!-- SolAR3DPointsViewerOpengl -->
             <property name="title" type="string" value="Points Cloud"/>

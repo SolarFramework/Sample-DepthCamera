@@ -36,10 +36,12 @@
 #include "xpcf/xpcf.h"
 
 #include "api/input/devices/IRGBDCamera.h"
+#include "api/input/files/IPointCloudLoader.h"
 #include "api/pointCloud/IPCFilterCentroid.h"
 #include "api/pointCloud/IPCFilter.h"
 #include "api/solver/pose/I3DTransformFinderFrom3D3D.h"
 #include "api/image/IImageConvertor.h"
+#include "api/display/I2DOverlay.h"
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"
 
@@ -88,11 +90,13 @@ int main(int argc, char **argv){
 
     // component declaration and creation
     SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<RGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
+    SRef<input::files::IPointCloudLoader> pcLoader =xpcfComponentManager->create<PointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
     SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
     SRef<pointCloud::IPCFilter> pcFilter = xpcfComponentManager->create<PCFilter>()->bindTo<pointCloud::IPCFilter>();
     SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<PCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<ICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<ICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+    SRef<display::I2DOverlay> overlay2D = xpcfComponentManager->create<SolAR2DOverlayOpencv>()->bindTo<display::I2DOverlay>();
     SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
     SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
     SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
@@ -126,7 +130,7 @@ int main(int argc, char **argv){
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
              viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
-             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, {}/*filteredPointCloud*/) == FrameworkReturnCode::_STOP)
+             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

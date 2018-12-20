@@ -121,6 +121,7 @@ int main(int argc, char **argv){
         return EXIT_FAILURE;
     }
 
+    char lastKey = ' ';
     bool registered = false;
 
     // Display the matches and the 3D point cloud
@@ -131,7 +132,7 @@ int main(int argc, char **argv){
         // downsample on 5cm grid
         pcFilter->filter(pointCloud,downsampledPointCloud);
 
-        if( !registered )
+        if( !registered && lastKey =='r' )
         {
             // filter given centroid point
             SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
@@ -140,8 +141,10 @@ int main(int argc, char **argv){
             // register (TODO : return codes not managed for now...)
             Transform3Df pose;
             icp->estimate(filteredPointCloud, meshPointCloud, pose);
+            transform3D->transformInPlace(meshPointCloud,pose);
             std::cout << pose.matrix() << std::endl;
             icpNormals->estimate(filteredPointCloud, meshPointCloud, pose);
+            transform3D->transformInPlace(meshPointCloud,pose);
             std::cout << pose.matrix() << std::endl;
 
             registered = true;
@@ -153,7 +156,7 @@ int main(int argc, char **argv){
         }
 
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
-        if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
+        if ( viewerRGB->displayKey(imageRGB,lastKey) == FrameworkReturnCode::_STOP  ||
              viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
              viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, {}) == FrameworkReturnCode::_STOP)
         {

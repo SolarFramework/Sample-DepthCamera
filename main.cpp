@@ -37,6 +37,7 @@
 
 #include "api/input/devices/IRGBDCamera.h"
 #include "api/pointCloud/IPCFilterCentroid.h"
+#include "api/pointCloud/IPCFilter.h"
 #include "api/image/IImageConvertor.h"
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"

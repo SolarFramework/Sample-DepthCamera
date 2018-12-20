@@ -12,7 +12,7 @@
         </component>
     </module>
 	
-	 <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenGL/0.5.0/lib/x86_64/shared" description="Module OpenGL">
+	 <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" path="$BCOMDEVROOT/bcomBuild/SolARModuleOpenGL/0.5.1/lib/x86_64/shared" description="Module OpenGL">
         <component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459" description="SolAR3DPointsViewerOpengl" name="SolAR3DPointsViewerOpengl">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="575d365a-9a27-11e8-9eb6-529269fb1459" description="I3DPointsViewer" name="I3DPointsViewer"/>
@@ -32,6 +32,17 @@
 		<component uuid="09205b96-7cba-4415-bc61-64744bc26222" description="SolARMapFilterOpencv" name="SolARMapFilterOpencv">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="e0d6cc82-6af2-493d-901a-2384fca0b16f" description="IMapFilter" name="IMapFilter"/>
+        </component>
+	</module>
+	
+	<module uuid="bc1a5b44-d022-4234-8f7a-7e2b72763bad" name="SolARModulePCL"  path="$BCOMDEVROOT/bcomBuild/SolARModulePCL/0.1.0/lib/x86_64/shared" description="Module PCL">
+		<component uuid="c90122f0-b432-4809-bf11-85165298b82d" description="A component based on PCL to filter a point cloud according to a given centroid" name="PCFilterCentroid">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="b293048a-1b04-4598-b2e5-7f485402acc0" description="Interface for point cloud filtering according to a given 3D point" name="IPCFilterCentroid"/>
+        </component>
+		<component uuid="14f2f201-39f3-4871-94a1-6e9dc852d3dd" description="A component based on PCL to filter a point cloud" name="PCFilter">
+                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
+                <interface uuid="3e068943-5230-4e6c-abd7-959f293f9829" description="Interface for point cloud filtering" name="IPCFilter"/>
         </component>
 	</module>
 	

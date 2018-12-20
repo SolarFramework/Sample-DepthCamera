@@ -56,7 +56,7 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="f2873a5d-0f9f-43a3-816c-1850ea7fe32d" description="Estimate the 3D pose of a camera according to 3D-3D correspondences" name="I3DTransformFinderFrom3D3D"/>
         </component>
-		<component uuid="e3e0e76f-6cf3-4848-b267-633550a52633" description="A Iterative Closest Point component based on PCL which use normals" name="ICPNormals">
+		<component uuid="0415dec1-d5e5-4497-8fd0-a86e21fbc5d5" description="A component based on PCL to load a point cloud from a file" name="PointCloudLoader">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="1abd8117-87d3-4c6c-8fb6-c2fdb7359ee2" description="Load a point cloud from a file" name="IPointCloudLoader"/>
         </component>

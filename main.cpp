@@ -99,6 +99,7 @@ int main(int argc, char **argv){
     SRef<Image> imageDepth;
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
     SRef<PointCloud> pointCloud;
+    SRef<PointCloud> downsampledPointCloud;
     SRef<PointCloud> filteredPointCloud;
 
     if(camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
@@ -113,16 +114,16 @@ int main(int argc, char **argv){
         camera->getPointCloud(pointCloud);
 
         // downsample on 5cm grid
-        pcFilter->filter(pointCloud,filteredPointCloud);
+        pcFilter->filter(pointCloud,downsampledPointCloud);
 
         // filter given centroid point
         SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
-        pcFilterCentroid->filter(filteredPointCloud, centroid, filteredPointCloud);
+        pcFilterCentroid->filter(downsampledPointCloud, centroid, filteredPointCloud);
 
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
-             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP/* ||
-             viewer3DPoints->display(pointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP*/)
+             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
+             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, {}/*filteredPointCloud*/) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

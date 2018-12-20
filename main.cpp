@@ -37,6 +37,7 @@
 
 #include "api/input/devices/IRGBDCamera.h"
 #include "api/input/files/IPointCloudLoader.h"
+#include "api/geom/I3DTransform.h"
 #include "api/pointCloud/IPCFilterCentroid.h"
 #include "api/pointCloud/IPCFilter.h"
 #include "api/solver/pose/I3DTransformFinderFrom3D3D.h"
@@ -96,6 +97,7 @@ int main(int argc, char **argv){
     SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<PCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<ICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<ICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+    SRef<geom::I3DTransform> transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
     SRef<display::I2DOverlay> overlay2D = xpcfComponentManager->create<SolAR2DOverlayOpencv>()->bindTo<display::I2DOverlay>();
     SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
     SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();

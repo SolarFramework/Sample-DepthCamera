@@ -33,9 +33,9 @@
     </module>
     
 	<module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools"  path="$BCOMDEVROOT/bcomBuild/SolARModuleTools/0.5.0/lib/x86_64/shared" description="Module Tools">
-		<component uuid="09205b96-7cba-4415-bc61-64744bc26222" description="SolARMapFilterOpencv" name="SolARMapFilterOpencv">
+		<component uuid="f05dd955-33bd-4d52-8717-93ad298ed3e3" description="SolAR::MODULES::TOOLS::SolAR3DTransform component" name="SolAR3DTransform">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
-                <interface uuid="e0d6cc82-6af2-493d-901a-2384fca0b16f" description="IMapFilter" name="IMapFilter"/>
+                <interface uuid="9c1052b2-46c0-467b-8363-36f19b6b445f" description="SolAR::api::geom::I3DTransform" name="I3DTransform"/>
         </component>
 	</module>
 	

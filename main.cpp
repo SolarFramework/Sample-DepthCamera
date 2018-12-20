@@ -64,9 +64,9 @@ namespace xpcf = org::bcom::xpcf;
 
 int main(int argc, char **argv){
 
-#if NDEBUG
+//#if NDEBUG
     boost::log::core::get()->set_logging_enabled(false);
-#endif
+//#endif
 
     LOG_ADD_LOG_TO_CONSOLE();
 
@@ -98,7 +98,8 @@ int main(int argc, char **argv){
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<ICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
     SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<ICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
     SRef<geom::I3DTransform> transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
-    SRef<display::I2DOverlay> overlay2D = xpcfComponentManager->create<SolAR2DOverlayOpencv>()->bindTo<display::I2DOverlay>();
+    SRef<display::I2DOverlay> overlay2DCenter = xpcfComponentManager->create<SolAR2DOverlayOpencv>("center")->bindTo<display::I2DOverlay>();
+    SRef<display::I2DOverlay> overlay2DPoints = xpcfComponentManager->create<SolAR2DOverlayOpencv>("points")->bindTo<display::I2DOverlay>();
     SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
     SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
     SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
@@ -108,12 +109,14 @@ int main(int argc, char **argv){
     SRef<Image> imageDepth;
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
     SRef<PointCloud> meshPointCloud;
+    SRef<PointCloud> meshPointCloud2;
     SRef<PointCloud> pointCloud;
     SRef<PointCloud> downsampledPointCloud;
     SRef<PointCloud> filteredPointCloud;
 
     // load mesh
     pcLoader->load("frac_star.pcd", meshPointCloud);
+    std::cout<<"NB points "<< meshPointCloud->getPointCloud().size();
 
     // start depth camera
     if(camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
@@ -129,30 +132,36 @@ int main(int argc, char **argv){
         camera->getNextRGBDFrame(imageRGB, imageDepth);
         camera->getPointCloud(pointCloud);
 
+        overlay2DCenter->drawCircle(xpcf::utils::make_shared<Point2Df>(640,360), imageRGB);
+
         // downsample on 5cm grid
         pcFilter->filter(pointCloud,downsampledPointCloud);
 
-        if( !registered && lastKey =='r' )
+        if( lastKey =='r' )
         {
             // filter given centroid point
             SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
-            pcFilterCentroid->filter(downsampledPointCloud, centroid, filteredPointCloud);
+            centroid->setZ( centroid->z() + 0.1f );
+            pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
 
             // register (TODO : return codes not managed for now...)
-            Transform3Df pose;
-            icp->estimate(filteredPointCloud, meshPointCloud, pose);
+            Transform3Df pose = Transform3Df::Identity();
+            icp->estimate(meshPointCloud, filteredPointCloud, pose);
             transform3D->transformInPlace(meshPointCloud,pose);
             std::cout << pose.matrix() << std::endl;
-            icpNormals->estimate(filteredPointCloud, meshPointCloud, pose);
+            /*icpNormals->estimate(meshPointCloud, filteredPointCloud, pose);
             transform3D->transformInPlace(meshPointCloud,pose);
             std::cout << pose.matrix() << std::endl;
-
-            registered = true;
+            */
         }
         else
         {
             // draw mesh overlay
-            // overlay2D->drawCircles(/*std::vector<SRef<Point2Df>>& points*/, imageRGB);
+            if (meshPointCloud != nullptr)
+            {
+                overlay2DPoints->drawCircles(camera->getWorldToPixels(meshPointCloud->getConstPointCloud()), imageRGB);
+                //std::cout<<"Display "<< meshPointCloud->getConstPointCloud().size() << " points" << std::endl;
+            }
         }
 
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);

@@ -75,13 +75,22 @@
 			<property name="width" type="Integer" value="640"/>
 			<property name="height" type="Integer" value="480"/>
 		</component>
-		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="contours"> <!-- SolAROverlay2DOpencv -->
+		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="center"> <!-- SolAROverlay2DOpencv -->
 			<property name="color" type="UnsignedInteger">
-                    <value>128</value>
-                    <value>128</value>
-                    <value>128</value>
+                    <value>255</value>
+                    <value>0</value>
+                    <value>0</value>
             </property>
 			<property name="thickness" type="UnsignedInteger" value="3"/> 
+		</component>
+		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="points"> <!-- SolAROverlay2DOpencv -->
+			<property name="color" type="UnsignedInteger">
+                    <value>0</value>
+                    <value>255</value>
+                    <value>0</value>
+            </property>
+			<property name="radius" type="UnsignedInteger" value="2"/>
+			<property name="thickness" type="UnsignedInteger" value="1"/> 
 		</component>
 		<component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459"> <!-- SolAR3DPointsViewerOpengl -->
             <property name="title" type="string" value="Points Cloud"/>

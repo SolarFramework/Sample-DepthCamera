@@ -105,15 +105,21 @@ int main(int argc, char **argv){
     SRef<Image> imageRGB;
     SRef<Image> imageDepth;
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
+    SRef<PointCloud> meshPointCloud;
     SRef<PointCloud> pointCloud;
     SRef<PointCloud> downsampledPointCloud;
     SRef<PointCloud> filteredPointCloud;
 
+    // load mesh
+    pcLoader->load("frac_star.pcd", meshPointCloud);
+
+    // start depth camera
     if(camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
         LOG_ERROR("Can't start camera stream. Check if camera is connected on a USB3 port.")
         return EXIT_FAILURE;
     }
 
+    bool registered = false;
 
     // Display the matches and the 3D point cloud
     while (true){
@@ -123,14 +129,31 @@ int main(int argc, char **argv){
         // downsample on 5cm grid
         pcFilter->filter(pointCloud,downsampledPointCloud);
 
-        // filter given centroid point
-        SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
-        pcFilterCentroid->filter(downsampledPointCloud, centroid, filteredPointCloud);
+        if( !registered )
+        {
+            // filter given centroid point
+            SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
+            pcFilterCentroid->filter(downsampledPointCloud, centroid, filteredPointCloud);
+
+            // register (TODO : return codes not managed for now...)
+            Transform3Df pose;
+            icp->estimate(filteredPointCloud, meshPointCloud, pose);
+            std::cout << pose.matrix() << std::endl;
+            icpNormals->estimate(filteredPointCloud, meshPointCloud, pose);
+            std::cout << pose.matrix() << std::endl;
+
+            registered = true;
+        }
+        else
+        {
+            // draw mesh overlay
+            // overlay2D->drawCircles(/*std::vector<SRef<Point2Df>>& points*/, imageRGB);
+        }
 
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
              viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
-             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP)
+             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, {}) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

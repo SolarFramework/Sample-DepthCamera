@@ -100,21 +100,29 @@ int main(int argc, char **argv){
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
     SRef<PointCloud> pointCloud;
     SRef<PointCloud> filteredPointCloud;
-    SRef<Point3Df> centroid = xpcf::utils::make_shared<Point3Df>(0.0f, 0.0f, 2.0f);
 
-    camera->startRGBD();
+    if(camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
+        LOG_ERROR("Can't start camera stream. Check if camera is connected on a USB3 port.")
+        return EXIT_FAILURE;
+    }
+
 
     // Display the matches and the 3D point cloud
     while (true){
         camera->getNextRGBDFrame(imageRGB, imageDepth);
         camera->getPointCloud(pointCloud);
 
-        pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
+        // downsample on 5cm grid
+        pcFilter->filter(pointCloud,filteredPointCloud);
+
+        // filter given centroid point
+        SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
+        pcFilterCentroid->filter(filteredPointCloud, centroid, filteredPointCloud);
 
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->display(imageRGB) == FrameworkReturnCode::_STOP  ||
-             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
-             viewer3DPoints->display(pointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP)
+             viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP/* ||
+             viewer3DPoints->display(pointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP*/)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

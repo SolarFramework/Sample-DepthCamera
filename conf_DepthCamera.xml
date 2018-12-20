@@ -32,7 +32,7 @@
         </component>
     </module>
     
-	<module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools"  path="$BCOMDEVROOT/bcomBuild/SolARModuleTools/0.5.0/lib/x86_64/shared" description="Module Tools">
+	<module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools"  path="$BCOMDEVROOT/bcomBuild/SolARModuleTools/0.5.1/lib/x86_64/shared" description="Module Tools">
 		<component uuid="f05dd955-33bd-4d52-8717-93ad298ed3e3" description="SolAR::MODULES::TOOLS::SolAR3DTransform component" name="SolAR3DTransform">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" description="IComponentIntrospect" name="IComponentIntrospect"/>
                 <interface uuid="9c1052b2-46c0-467b-8363-36f19b6b445f" description="SolAR::api::geom::I3DTransform" name="I3DTransform"/>

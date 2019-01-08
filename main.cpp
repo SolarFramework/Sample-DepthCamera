@@ -155,10 +155,10 @@ int main(int argc, char **argv){
 
             // translate target mesh to be behind measured pointcloud
             Transform3Df init_pose = Transform3Df::Identity();
-            init_pose.translate( Vector3f{ 0.f, 0.f, centroid->z() + 0.05f } );
+            init_pose.translate( Vector3f{ centroid->x(), centroid->y(), centroid->z() + 0.05f } );
             transform3D->transformInPlace(targetPointCloud,init_pose);
 
-            Transform3Df pose_coarse = Transform3Df::Identity(), pose_fine = Transform3Df::Identity();
+            Transform3Df pose_coarse, pose_fine;
 
             // coarse pose estimate
             icp->estimate(sourcePointCloud, targetPointCloud, pose_coarse);
@@ -178,7 +178,7 @@ int main(int argc, char **argv){
             if ( targetPointCloud != nullptr )
             {
                 overlay2DPoints->drawCircles(camera->getWorldToPixels(targetPointCloud->getConstPointCloud()), imageRGB);
-                //std::cout<<"Display "<< meshPointCloud->getConstPointCloud().size() << " points" << std::endl;
+                //std::cout<<"Display "<< targetPointCloud->getConstPointCloud().size() << " points" << std::endl;
             }
         }
 

@@ -121,8 +121,11 @@
 			<property name="zoomSensitivity" type="Float" value="10.0"/>
 			<property name="exitKey" type="Integer" value="27"/>
         </component>
-		<component uuid="c90122f0-b432-4809-bf11-85165298b82d"> <!-- PCFilterCentroid -->
-			<property name="radiusThreshold" type="Float" value="0.05"/>
-		</component>
+	<component uuid="14f2f201-39f3-4871-94a1-6e9dc852d3dd"> <!-- PCFilter -->
+		<property name="leafSize" type="Float" value="0.01"/>
+	</component>
+	<component uuid="c90122f0-b432-4809-bf11-85165298b82d"> <!-- PCFilterCentroid -->
+		<property name="radiusThreshold" type="Float" value="0.05"/>
+	</component>
     </configuration>
 </xpcf-registry>

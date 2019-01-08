@@ -109,14 +109,17 @@ int main(int argc, char **argv){
     SRef<Image> imageDepth;
     SRef<Image> imageConvertedDepth = xpcf::utils::make_shared<Image>(Image::LAYOUT_GREY, Image::PER_CHANNEL, Image::DataType::TYPE_8U);
     SRef<PointCloud> meshPointCloud;
-    SRef<PointCloud> meshPointCloud2;
     SRef<PointCloud> pointCloud;
     SRef<PointCloud> downsampledPointCloud;
     SRef<PointCloud> filteredPointCloud;
 
+    // pointclouds used for registration
+    SRef<PointCloud> sourcePointCloud; // the measured pointcloud
+    SRef<PointCloud> targetPointCloud; // the model reference pointclouud
+
     // load mesh
     pcLoader->load("frac_star.pcd", meshPointCloud);
-    std::cout<<"NB points "<< meshPointCloud->getPointCloud().size();
+    std::cout<<"NB points "<< meshPointCloud->getPointCloud().size() << std::endl;
 
     // start depth camera
     if(camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
@@ -134,7 +137,7 @@ int main(int argc, char **argv){
 
         overlay2DCenter->drawCircle(xpcf::utils::make_shared<Point2Df>(640,360), imageRGB);
 
-        // downsample on 5cm grid
+        // downsample on new grid
         pcFilter->filter(pointCloud,downsampledPointCloud);
 
         if( lastKey =='r' )
@@ -142,24 +145,39 @@ int main(int argc, char **argv){
             // filter given centroid point
             SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
 
-            pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
-            centroid->setZ( centroid->z() + 0.1f );
-            // register (TODO : return codes not managed for now...)
-            Transform3Df pose = Transform3Df::Identity();
-            icp->estimate(meshPointCloud, filteredPointCloud, pose);
-            transform3D->transformInPlace(meshPointCloud,pose);
-            std::cout << pose.matrix() << std::endl;
-            /*icpNormals->estimate(meshPointCloud, filteredPointCloud, pose);
-            transform3D->transformInPlace(meshPointCloud,pose);
-            std::cout << pose.matrix() << std::endl;
-            */
+            std::cout << "centroid selection coord @ " << centroid->getX() << "," << centroid->getY() << "," << centroid->getZ() << std::endl;
+
+            pcFilterCentroid->filter(downsampledPointCloud, centroid, filteredPointCloud);
+
+            // deep copy pointclouds to have a work items
+            sourcePointCloud = xpcf::utils::make_shared<PointCloud>( *filteredPointCloud );
+            targetPointCloud = xpcf::utils::make_shared<PointCloud>( *meshPointCloud );
+
+            // translate target mesh to be behind measured pointcloud
+            Transform3Df init_pose = Transform3Df::Identity();
+            init_pose.translate( Vector3f{ 0.f, 0.f, centroid->z() + 0.05f } );
+            transform3D->transformInPlace(targetPointCloud,init_pose);
+
+            Transform3Df pose_coarse = Transform3Df::Identity(), pose_fine = Transform3Df::Identity();
+
+            // coarse pose estimate
+            icp->estimate(sourcePointCloud, targetPointCloud, pose_coarse);
+            std::cout << "coarse pose : \n" << pose_coarse.matrix() << std::endl;
+
+            // update source cloud pose
+            transform3D->transformInPlace(sourcePointCloud,pose_coarse);
+
+            // refined pose estimate
+            icpNormals->estimate(sourcePointCloud, targetPointCloud, pose_fine);
+            std::cout << "refined pose : \n" << (pose_fine*pose_coarse).matrix() << std::endl;
+            transform3D->transformInPlace(targetPointCloud,(pose_fine*pose_coarse).inverse());
         }
         else
         {
             // draw mesh overlay
-            if (meshPointCloud != nullptr)
+            if ( targetPointCloud != nullptr )
             {
-                overlay2DPoints->drawCircles(camera->getWorldToPixels(meshPointCloud->getConstPointCloud()), imageRGB);
+                overlay2DPoints->drawCircles(camera->getWorldToPixels(targetPointCloud->getConstPointCloud()), imageRGB);
                 //std::cout<<"Display "<< meshPointCloud->getConstPointCloud().size() << " points" << std::endl;
             }
         }

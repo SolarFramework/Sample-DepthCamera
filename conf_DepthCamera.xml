@@ -121,5 +121,8 @@
 			<property name="zoomSensitivity" type="Float" value="10.0"/>
 			<property name="exitKey" type="Integer" value="27"/>
         </component>
+		<component uuid="c90122f0-b432-4809-bf11-85165298b82d"> <!-- PCFilterCentroid -->
+			<property name="radiusThreshold" type="Float" value="0.05"/>
+		</component>
     </configuration>
 </xpcf-registry>

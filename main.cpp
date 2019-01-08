@@ -141,9 +141,9 @@ int main(int argc, char **argv){
         {
             // filter given centroid point
             SRef<Point3Df> centroid( new Point3Df( camera->getPixelToWorld( { 640, 360 } ) ) ); // middle of the screen
-            centroid->setZ( centroid->z() + 0.1f );
-            pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
 
+            pcFilterCentroid->filter(pointCloud, centroid, filteredPointCloud);
+            centroid->setZ( centroid->z() + 0.1f );
             // register (TODO : return codes not managed for now...)
             Transform3Df pose = Transform3Df::Identity();
             icp->estimate(meshPointCloud, filteredPointCloud, pose);
@@ -167,7 +167,7 @@ int main(int argc, char **argv){
         imageConvertor->convert(imageDepth, imageConvertedDepth, Image::LAYOUT_GREY, DEPTH_SCALE);
         if ( viewerRGB->displayKey(imageRGB,lastKey) == FrameworkReturnCode::_STOP  ||
              viewerDepth->display(imageConvertedDepth) == FrameworkReturnCode::_STOP ||
-             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, {}) == FrameworkReturnCode::_STOP)
+             viewer3DPoints->display(downsampledPointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud) == FrameworkReturnCode::_STOP)
         {
            LOG_INFO("End of Depth Camera sample");
            break;

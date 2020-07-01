@@ -46,6 +46,8 @@
 #include "api/display/IImageViewer.h"
 #include "api/display/I3DPointsViewer.h"
 
+#include "core/Log.h"
+
 #define DEPTH_SCALE 4.f * 255.0f/65535.0f
 
 using namespace SolAR;
@@ -88,21 +90,20 @@ int main(int argc, char **argv){
 #endif
     // declare and create components
     LOG_INFO("Start creating components");
-
     // component declaration and creation
-    SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<RGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
-    SRef<input::files::IPointCloudLoader> pcLoader =xpcfComponentManager->create<PointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
-    SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
-    SRef<pointCloud::IPCFilter> pcFilter = xpcfComponentManager->create<PCFilter>()->bindTo<pointCloud::IPCFilter>();
-    SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<PCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
-    SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<ICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
-    SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<ICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
-    SRef<geom::I3DTransform> transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
-    SRef<display::I2DOverlay> overlay2DCenter = xpcfComponentManager->create<SolAR2DOverlayOpencv>("center")->bindTo<display::I2DOverlay>();
-    SRef<display::I2DOverlay> overlay2DPoints = xpcfComponentManager->create<SolAR2DOverlayOpencv>("points")->bindTo<display::I2DOverlay>();
-    SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
-    SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
-    SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
+    SRef<input::devices::IRGBDCamera> camera =xpcfComponentManager->create<SolARRGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
+	SRef<input::files::IPointCloudLoader> pcLoader =xpcfComponentManager->create<SolARPointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
+	SRef<image::IImageConvertor> imageConvertor =xpcfComponentManager->create<SolARImageConvertorOpencv>()->bindTo<image::IImageConvertor>();
+	SRef<pointCloud::IPCFilter> pcFilter = xpcfComponentManager->create<SolARPCFilter>()->bindTo<pointCloud::IPCFilter>();
+	SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<SolARPCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
+	SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<SolARICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+	SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<SolARICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+	SRef<geom::I3DTransform> transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
+	SRef<display::I2DOverlay> overlay2DCenter = xpcfComponentManager->create<SolAR2DOverlayOpencv>("center")->bindTo<display::I2DOverlay>();
+	SRef<display::I2DOverlay> overlay2DPoints = xpcfComponentManager->create<SolAR2DOverlayOpencv>("points")->bindTo<display::I2DOverlay>();
+	SRef<display::IImageViewer> viewerRGB =xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
+	SRef<display::IImageViewer> viewerDepth =xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
+	SRef<display::I3DPointsViewer> viewer3DPoints =xpcfComponentManager->create<SolAR3DPointsViewerOpengl>()->bindTo<display::I3DPointsViewer>();
 
     // declarations of data structures used to exange information between components
     SRef<Image> imageRGB;
@@ -116,6 +117,7 @@ int main(int argc, char **argv){
     // pointclouds used for registration
     SRef<PointCloud> sourcePointCloud; // the measured pointcloud
     SRef<PointCloud> targetPointCloud; // the model reference pointclouud
+		
 
     // load mesh
     pcLoader->load("frac_star.pcd", meshPointCloud);
@@ -135,7 +137,7 @@ int main(int argc, char **argv){
         camera->getNextRGBDFrame(imageRGB, imageDepth);
         camera->getPointCloud(pointCloud);
 
-        overlay2DCenter->drawCircle(xpcf::utils::make_shared<Point2Df>(640,360), imageRGB);
+        overlay2DCenter->drawCircle(Point2Df(640,360), imageRGB);
 
         // downsample on new grid
         pcFilter->filter(pointCloud,downsampledPointCloud);

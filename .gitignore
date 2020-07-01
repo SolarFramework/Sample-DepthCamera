@@ -1,3 +1,4 @@
+build/
 
 *.pro.user
 
@@ -46,6 +47,45 @@
 *.rc
 *.res
 *.exp
+*.ilk
+*.pdb
+
+# Visual Studio files
+.vs*
+x64*
+*.vcxproj.user
+build-SolAR*
+Plugin/PipelineNaturalImageMarker.pro.user.9582bec
+Multithread/build/
+Plugin/PipelineNaturalImageMarker.pro.bak
+Plugin/build/
+Plugin/tests/TestNaturalImageMarkerPipeline/build/
+StandAlone/build/
+build-MTRelease/
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+x64/
+.vs/
+*.bat
+*remakeninfo.txt
+Debug/
+Release/
+*-packagedependencies.*
+*-packagedependencies-win.*
+*.rc
+*.stash
+
 *.ilk
 *.pdb
 

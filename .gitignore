@@ -85,6 +85,7 @@ Release/
 *-packagedependencies-win.*
 *.rc
 *.stash
+bcom-SolARDepthCameraSampleStandAlone.pc
 
 *.ilk
 *.pdb

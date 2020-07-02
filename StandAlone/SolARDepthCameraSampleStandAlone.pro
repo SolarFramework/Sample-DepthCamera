@@ -3,7 +3,7 @@ QT       -= core gui
 CONFIG -= qt
 
 ## global defintions : target lib name, version
-TARGET = SolARDepthCameraSample
+TARGET = SolARDepthCameraSampleStandAlone
 VERSION=0.8.1
 
 DEFINES += MYVERSION=$${VERSION}
@@ -12,7 +12,7 @@ CONFIG += console
 
 include(findremakenrules.pri)
 
-#QT += opengl
+QT += opengl
 
 CONFIG(debug,debug|release) {
     TARGETDEPLOYDIR = $${PWD}../../bin/Debug

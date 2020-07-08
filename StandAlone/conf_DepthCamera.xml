@@ -72,6 +72,14 @@
   	</factory>
 	  
 	<properties>
+		<configure component="SolARRGBDCamera">
+			<property name="rgb_width" type="Integer" value="1280"/>
+			<property name="rgb_height" type="Integer" value="720"/>
+			<property name="rgb_framerate" type="Integer" value="30"/>
+			<property name="depth_width" type="Integer" value="640"/>
+			<property name="depth_height" type="Integer" value="480"/>	
+			<property name="depth_framerate" type="Integer" value="30"/>	
+		</configure>
 		<configure component="SolARImageViewerOpencv" name="color">
 			<property name="title" type="string" value="Color (press r to run, esc to quit)"/>
 			<property name="exitKey" type="Integer" value="27"/>

@@ -77,23 +77,20 @@ int main(int argc, char **argv) {
 		LOG_INFO("Start creating components");
 
 		// component declaration and creation
-		auto camera = xpcfComponentManager->resolve<input::devices::IRGBDCamera>(); 
-		SRef<input::files::IPointCloudLoader> pcLoader = xpcfComponentManager->create<SolARPointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
+		//auto camera = xpcfComponentManager->create<SolARRGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
+		auto camera = xpcfComponentManager->resolve<input::devices::IRGBDCamera>();
+		auto pcLoader = xpcfComponentManager->create<SolARPointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
 		auto imageConvertor = xpcfComponentManager->resolve<image::IImageConvertor>(); 
-		SRef<pointCloud::IPCFilter> pcFilter = xpcfComponentManager->create<SolARPCFilter>()->bindTo<pointCloud::IPCFilter>();
-		SRef<pointCloud::IPCFilterCentroid> pcFilterCentroid = xpcfComponentManager->create<SolARPCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
-		SRef<solver::pose::I3DTransformFinderFrom3D3D> icp = xpcfComponentManager->create<SolARICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
-		SRef<solver::pose::I3DTransformFinderFrom3D3D> icpNormals = xpcfComponentManager->create<SolARICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
-		SRef<geom::I3DTransform> transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
-		//auto overlay2DCenter = xpcfComponentManager->resolve<display::I2DOverlay>("center");
-		SRef<display::I2DOverlay> overlay2DCenter = xpcfComponentManager->create<SolAR2DOverlayOpencv>("center")->bindTo<display::I2DOverlay>();
-		//auto overlay2DPoints = xpcfComponentManager->resolve<display::I2DOverlay>("points");
-		SRef<display::I2DOverlay> overlay2DPoints = xpcfComponentManager->create<SolAR2DOverlayOpencv>("points")->bindTo<display::I2DOverlay>();
-		//auto viewerRGB = xpcfComponentManager->resolve<display::IImageViewer>("color");
-		SRef<display::IImageViewer> viewerRGB = xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
-		//auto viewerDepth = xpcfComponentManager->resolve<display::IImageViewer>("depth");
-		SRef<display::IImageViewer> viewerDepth = xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
-		SRef<display::I3DPointsViewer> viewer3DPoints = xpcfComponentManager->resolve<display::I3DPointsViewer>();
+		auto pcFilter = xpcfComponentManager->create<SolARPCFilter>()->bindTo<pointCloud::IPCFilter>();
+		auto pcFilterCentroid = xpcfComponentManager->create<SolARPCFilterCentroid>()->bindTo<pointCloud::IPCFilterCentroid>();
+		auto icp = xpcfComponentManager->create<SolARICP>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+		auto icpNormals = xpcfComponentManager->create<SolARICPNormals>()->bindTo<solver::pose::I3DTransformFinderFrom3D3D>();
+		auto transform3D = xpcfComponentManager->create<SolAR3DTransform>()->bindTo<geom::I3DTransform>();
+		auto overlay2DCenter = xpcfComponentManager->create<SolAR2DOverlayOpencv>("center")->bindTo<display::I2DOverlay>();
+		auto overlay2DPoints = xpcfComponentManager->create<SolAR2DOverlayOpencv>("points")->bindTo<display::I2DOverlay>();
+		auto viewerRGB = xpcfComponentManager->create<SolARImageViewerOpencv>("color")->bindTo<display::IImageViewer>();
+		auto viewerDepth = xpcfComponentManager->create<SolARImageViewerOpencv>("depth")->bindTo<display::IImageViewer>();
+		auto viewer3DPoints = xpcfComponentManager->resolve<display::I3DPointsViewer>();
 
 		#pragma endregion
 
@@ -173,7 +170,6 @@ int main(int argc, char **argv) {
 				if (targetPointCloud != nullptr)
 				{
 					overlay2DPoints->drawCircles(camera->getWorldToPixels(targetPointCloud->getConstPointCloud()), imageRGB);
-					//std::cout<<"Display "<< targetPointCloud->getConstPointCloud().size() << " points" << std::endl;
 				}
 			}
 

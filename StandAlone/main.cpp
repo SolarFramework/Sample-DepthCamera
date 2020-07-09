@@ -77,8 +77,8 @@ int main(int argc, char **argv) {
 		LOG_INFO("Start creating components");
 
 		// component declaration and creation
-		//auto camera = xpcfComponentManager->create<SolARRGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
 		auto camera = xpcfComponentManager->resolve<input::devices::IRGBDCamera>();
+		//auto camera = xpcfComponentManager->create<SolARRGBDCamera>()->bindTo<input::devices::IRGBDCamera>();
 		auto pcLoader = xpcfComponentManager->create<SolARPointCloudLoader>()->bindTo<input::files::IPointCloudLoader>();
 		auto imageConvertor = xpcfComponentManager->resolve<image::IImageConvertor>(); 
 		auto pcFilter = xpcfComponentManager->create<SolARPCFilter>()->bindTo<pointCloud::IPCFilter>();
@@ -109,12 +109,10 @@ int main(int argc, char **argv) {
 		#pragma endregion
 
 		// load mesh
-		pcLoader->load("frac_star.pcd", meshPointCloud);
-		std::cout << "NB points " << meshPointCloud->getPointCloud().size() << std::endl;
-
+		pcLoader->load(meshPointCloud);
 
 		// start depth camera
-		if (camera->startRGBD() != FrameworkReturnCode::_SUCCESS) {
+		if (camera->start() != FrameworkReturnCode::_SUCCESS) {
 			LOG_ERROR("Can't start camera stream. Check if camera is connected on a USB3 port.")
 				return EXIT_FAILURE;
 		}

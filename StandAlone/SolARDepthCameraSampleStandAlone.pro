@@ -12,8 +12,6 @@ CONFIG += console
 
 include(findremakenrules.pri)
 
-QT += opengl
-
 CONFIG(debug,debug|release) {
     TARGETDEPLOYDIR = $${PWD}../../bin/Debug
     DEFINES += _DEBUG=1
@@ -70,7 +68,7 @@ win32 {
 
 config_files.path = $${TARGETDEPLOYDIR}
 config_files.files= $$files($${PWD}/conf_DepthCamera.xml)\
-                    $$files($${PWD}/frac_star.pcd)
+                    $$files($${PWD}/bunny_10000_opencv.ply)
 INSTALLS += config_files
 
 #NOTE : Must be placed at the end of the .pro

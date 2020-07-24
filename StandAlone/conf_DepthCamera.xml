@@ -5,10 +5,6 @@
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="b05f3dbb-f93d-465c-aee1-fb58e1480c42" name="IImageViewer" description="IImageViewer"/>
         </component>
-		<component uuid="fd7fb607-144f-418c-bcf2-f7cf71532c22" name="SolARImageConvertorOpencv" description="SolARImageConvertorOpencv">
-                <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
-                <interface uuid="9c982719-6cb4-4831-aa88-9e01afacbd16" name="IImageConvertor" description="IImageConvertor"/>
-        </component>
 		<component uuid="cc51d685-9797-4ffd-a9dd-cec4f367fa6a" name="SolAR2DOverlayOpencv" description="SolAR2DOverlayOpencv">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="62b8b0b5-9344-40e6-a288-e609eb3ff0f1" name="I2DOverlay" description="I2DOverlay"/>
@@ -64,7 +60,7 @@
 	<factory>
       <bindings>
         <bind interface="IRGBDCamera" to="SolARRGBDCamera"/>
-        <bind interface="IImageConvertor" to="SolARImageConvertorOpencv"/>
+		<bind interface="IPointCloudLoader" to="SolARPointCloudLoader"/>
         <bind interface="I2DOverlay" to="SolAR2DOverlayOpencv"/>
         <bind interface="IImageViewer" to="SolARImageViewerOpencv"/>
         <bind interface="I3DPointsViewer" to="SolAR3DPointsViewerOpengl"/>
@@ -73,21 +69,23 @@
 	  
 	<properties>
 		<configure component="SolARRGBDCamera">
-			<property name="rgb_width" type="Integer" value="1280"/>
-			<property name="rgb_height" type="Integer" value="720"/>
+			<property name="rgb_width" type="Integer" value="640"/>
+			<property name="rgb_height" type="Integer" value="480"/>
 			<property name="rgb_framerate" type="Integer" value="30"/>
 			<property name="depth_width" type="Integer" value="640"/>
 			<property name="depth_height" type="Integer" value="480"/>	
-			<property name="depth_framerate" type="Integer" value="30"/>	
+			<property name="depth_framerate" type="Integer" value="30"/>
+			<property name="depth_minimum" type="Float"	value="0.105"/>
+			<property name="depth_colorize" type="Integer" value="0"/>
 		</configure>
 		<configure component="SolARPointCloudLoader">
-			<property name="filepath" type="string" value="frac_star.pcd"/>	
+			<property name="filePath" type="string" value="bunny_10000_opencv.ply"/>	
 		</configure>
 		<configure component="SolARImageViewerOpencv" name="color">
-			<property name="title" type="string" value="Color (press r to run, esc to quit)"/>
+			<property name="title" type="string" value="Color (press r to run, l to loop, d to switch 3D view, esc to quit)"/>
 			<property name="exitKey" type="Integer" value="27"/>
-			<property name="width" type="Integer" value="1280"/>
-			<property name="height" type="Integer" value="720"/>
+			<property name="width" type="Integer" value="640"/>
+			<property name="height" type="Integer" value="480"/>
 		</configure>
 		<configure component="SolARImageViewerOpencv" name="depth">
 			<property name="title" type="string" value="Depth"/>
@@ -97,8 +95,8 @@
 		</configure>
 		<configure component="SolAR3DPointsViewerOpengl">
 			<property name="title" type="string" value="Points Cloud"/>
-			<property name="width" type="UnsignedInteger" value="1280"/>
-			<property name="height" type="UnsignedInteger" value="960"/>
+			<property name="width" type="UnsignedInteger" value="1080"/>
+			<property name="height" type="UnsignedInteger" value="720"/>
 			<property name="backgroundColor" type="UnsignedInteger">
 				<value>0</value>
 				<value>0</value>
@@ -126,9 +124,10 @@
 		</configure>
 		<configure component="SolARPCFilter">
 			<property name="leafSize" type="Float" value="0.01"/>
+			<property name="depthMax" type="Float" value="2.0"/>
 		</configure>
 		<configure component="SolARPCFilterCentroid">
-			<property name="radiusThreshold" type="Float" value="0.05"/>
+			<property name="radiusThreshold" type="Float" value="0.08"/>
 		</configure>
 		<configure component="SolAR2DOverlayOpencv" name="center">
 			<property name="color" type="UnsignedInteger">

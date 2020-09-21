@@ -1,11 +1,10 @@
-build/
-
-*.pro.user
+*.user
 
 *-Debug
 
 *-Release
 
+*.vcxproj*
 
 # Prerequisites
 *.d
@@ -15,6 +14,8 @@ build/
 *.lo
 *.o
 *.obj
+
+.\build
 
 # Precompiled Headers
 *.gch
@@ -41,7 +42,7 @@ build/
 *.app
 
 #others
-
+*.*pre1
 *.rej
 *.stash
 *.rc
@@ -49,19 +50,9 @@ build/
 *.exp
 *.ilk
 *.pdb
+*.autosave
 
 # Visual Studio files
-.vs*
-x64*
-*.vcxproj.user
-build-SolAR*
-Plugin/PipelineNaturalImageMarker.pro.user.9582bec
-Multithread/build/
-Plugin/PipelineNaturalImageMarker.pro.bak
-Plugin/build/
-Plugin/tests/TestNaturalImageMarkerPipeline/build/
-StandAlone/build/
-build-MTRelease/
 *.ib_pdb_index
 *.idb
 *.ilk
@@ -83,17 +74,29 @@ Debug/
 Release/
 *-packagedependencies.*
 *-packagedependencies-win.*
-*.rc
-*.stash
-bcom-SolARDepthCameraSampleStandAlone.pc
+*-packagedependencies-linux.*
+*-packagedependencies-unix.*
+*-packagedependencies-android.*
+*.pc
 
-*.ilk
-*.pdb
+# generated documentation
+doc/ 
 
-# Visual Studio files
-.vs*
-x64*
-*.vcxproj.user
+*.log
+*.tlog
+*.TMP
+*.tmp
 
-#generated files
-solar_cloud*
+tests/bin
+
+build/
+
+*InstallDependencies.bat
+*debug.bat
+*release.bat
+*remakeninfo.txt
+*.pc
+
+Makefile
+Makefile.Debug
+Makefile.Release

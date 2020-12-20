@@ -20,7 +20,7 @@ This pipeline loads a 3D mesh, then it tries to detect on real time camera image
 * Open a terminal and execute `./bin/Release/SolARSample_DepthCamera_Mono.exe`
 * Press `R` to run pipeline for the current frame (use `L` to run on every frame)
 * Press `escape` to quit the application
-* If you want to change properties of the components of the pipeline, edit the [SolARSample_DepthCamera_Mono](./SolARSample_DepthCamera_Mono_conf/SolARSample_DepthCamera_Mono_conf.xml) file
+* If you want to change properties of the components of the pipeline, edit the [SolARSample_DepthCamera_Mono](./SolARSample_DepthCamera_Mono/SolARSample_DepthCamera_Mono_conf.xml) file
 
 
 | ![](./StandAlone/depth_rgb.jpg) | ![](./StandAlone/depth_lut.jpg) | ![](./StandAlone/depth_3dview.jpg) |

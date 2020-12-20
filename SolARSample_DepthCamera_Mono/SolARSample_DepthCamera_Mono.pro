@@ -3,7 +3,7 @@ QT       -= core gui
 CONFIG -= qt
 
 ## global defintions : target lib name, version
-TARGET = SolARDepthCameraSampleStandAlone
+TARGET = SolARSample_DepthCamera_Mono
 VERSION=0.9.0
 
 DEFINES += MYVERSION=$${VERSION}
@@ -67,13 +67,13 @@ win32 {
 }
 
 config_files.path = $${TARGETDEPLOYDIR}
-config_files.files= $$files($${PWD}/conf_DepthCamera.xml)\
-                    $$files($${PWD}/bunny_10000_opencv.ply)
+config_files.files= $$files($${PWD}/SolARSample_DepthCamera_Mono_conf.xml)
+
 INSTALLS += config_files
 
 #NOTE : Must be placed at the end of the .pro
 include ($$shell_quote($$shell_path($${QMAKE_REMAKEN_RULES_ROOT}/remaken_install_target.pri)))) # Shell_quote & shell_path required for visual on windows
 
 DISTFILES += \
-    conf_DepthCamera.xml \
+    SolARSample_DepthCamera_Mono_conf.xml \
     packagedependencies.txt

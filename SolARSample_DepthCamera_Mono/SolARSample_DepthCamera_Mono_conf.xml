@@ -60,7 +60,7 @@
 	<factory>
       <bindings>
         <bind interface="IRGBDCamera" to="SolARRGBDCamera"/>
-		<bind interface="IPointCloudLoader" to="SolARPointCloudLoader"/>
+        <bind interface="IPointCloudLoader" to="SolARPointCloudLoader"/>
         <bind interface="I2DOverlay" to="SolAR2DOverlayOpencv"/>
         <bind interface="IImageViewer" to="SolARImageViewerOpencv"/>
         <bind interface="I3DPointsViewer" to="SolAR3DPointsViewerOpengl"/>

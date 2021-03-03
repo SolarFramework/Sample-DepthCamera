@@ -8,31 +8,29 @@ This pipeline loads a 3D mesh, then it tries to detect on real time camera image
 
 
 | ![](./pipeline.jpg) |
-|:-:| 
-| Depth pipeline | 
+|:-:|
+| Depth pipeline |
 
 
-## How run it
+## How to run it
 
 ### StandAlone
 * To run it, first print the 3D [Bunny](./StandAlone/bunny_10000_opencv.ply) mesh.
 * Put it in center front of the camera (at least > 20cm)
-* Open a terminal and execute `./bin/Release/SolARDepthCameraSampleStandAlone.exe`
+* Open a terminal and execute `./bin/Release/SolARSample_DepthCamera_Mono.exe`
 * Press `R` to run pipeline for the current frame (use `L` to run on every frame)
 * Press `escape` to quit the application
-* If you want to change properties of the components of the pipeline, edit the [conf_DepthCamera.xml](./StandAlone/conf_DepthCamera.xml) file
+* If you want to change properties of the components of the pipeline, edit the [SolARSample_DepthCamera_Mono](./SolARSample_DepthCamera_Mono/SolARSample_DepthCamera_Mono_conf.xml) file
 
 
-| ![](./StandAlone/depth_rgb.jpg) | ![](./StandAlone/depth_lut.jpg) | ![](./StandAlone/depth_3dview.jpg) | 
-|:-:|:-:|:-:| 
+| ![](./StandAlone/depth_rgb.jpg) | ![](./StandAlone/depth_lut.jpg) | ![](./StandAlone/depth_3dview.jpg) |
+|:-:|:-:|:-:|
 | RGB | 2D Depth Map | 3D Depth Map |
 
-### Plugin 
+### Plugin
 **Unity plugin coming soon**
 
-## Contact 
+## Contact
 Website https://solarframework.github.io/
 
 Contact framework.solar@b-com.com
-
-

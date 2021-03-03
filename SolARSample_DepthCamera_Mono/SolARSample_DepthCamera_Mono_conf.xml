@@ -60,7 +60,7 @@
 	<factory>
       <bindings>
         <bind interface="IRGBDCamera" to="SolARRGBDCamera"/>
-		<bind interface="IPointCloudLoader" to="SolARPointCloudLoader"/>
+        <bind interface="IPointCloudLoader" to="SolARPointCloudLoader"/>
         <bind interface="I2DOverlay" to="SolAR2DOverlayOpencv"/>
         <bind interface="IImageViewer" to="SolARImageViewerOpencv"/>
         <bind interface="I3DPointsViewer" to="SolAR3DPointsViewerOpengl"/>
@@ -79,7 +79,7 @@
 			<property name="depth_colorize" type="Integer" value="0"/>
 		</configure>
 		<configure component="SolARPointCloudLoader">
-			<property name="filePath" type="string" value="bunny_10000_opencv.ply"/>	
+            <property name="filePath" type="string" value="../../data/bunny_10000_opencv.ply"/>
 		</configure>
 		<configure component="SolARImageViewerOpencv" name="color">
 			<property name="title" type="string" value="Color (press r to run, l to loop, d to switch 3D view, esc to quit)"/>

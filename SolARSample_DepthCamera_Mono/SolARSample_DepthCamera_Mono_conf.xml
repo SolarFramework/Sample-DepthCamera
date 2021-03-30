@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <xpcf-registry autoAlias="true"> 
-        <module uuid="15e1990b-86b2-445c-8194-0cbe80ede970" name="SolARModuleOpenCV" description="OpenCV" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleOpenCV/0.9.1/lib/x86_64/shared">
+        <module uuid="15e1990b-86b2-445c-8194-0cbe80ede970" name="SolARModuleOpenCV" description="OpenCV" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleOpenCV/0.9.4/lib/x86_64/shared">
 		<component uuid="19ea4e13-7085-4e3f-92ca-93f200ffb01b" name="SolARImageViewerOpencv" description="SolARImageViewerOpencv">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="b05f3dbb-f93d-465c-aee1-fb58e1480c42" name="IImageViewer" description="IImageViewer"/>
@@ -11,14 +11,14 @@
         </component>
     </module>
 
-        <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" description="SolARModuleOpenGL" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleOpenGL/0.9.1/lib/x86_64/shared">
+        <module uuid="6e960df6-9a36-11e8-9eb6-529269fb1459" name="SolARModuleOpenGL" description="SolARModuleOpenGL" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleOpenGL/0.9.4/lib/x86_64/shared">
         <component uuid="afd38ea0-9a46-11e8-9eb6-529269fb1459" name="SolAR3DPointsViewerOpengl" description="SolAR3DPointsViewerOpengl">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="575d365a-9a27-11e8-9eb6-529269fb1459" name="I3DPointsViewer" description="I3DPointsViewer"/>
         </component>
     </module> 
 
-        <module uuid="63b92983-f790-448b-8124-3b686d481aaf" name="SolARModuleRealSense" description="RealSense modules" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleRealSense/0.9.1/lib/x86_64/shared">
+        <module uuid="63b92983-f790-448b-8124-3b686d481aaf" name="SolARModuleRealSense" description="RealSense modules" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleRealSense/0.9.4/lib/x86_64/shared">
 		<component uuid="315dfef4-26f3-4a79-a809-874b1006cd88" name="SolARRGBDCamera" description="A component to handle a Real Sense RGBD Camera">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="5bf56174-94fd-4256-8eb7-b653ea3b8c34" name="IRGBDCamera" description="Interface for RGBD camera"/>
@@ -27,14 +27,14 @@
         </component>
     </module>
     
-        <module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools" description="Module Tools" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleTools/0.9.1/lib/x86_64/shared">
+        <module uuid="28b89d39-41bd-451d-b19e-d25a3d7c5797" name="SolARModuleTools" description="Module Tools" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModuleTools/0.9.4/lib/x86_64/shared">
 		<component uuid="f05dd955-33bd-4d52-8717-93ad298ed3e3" name="SolAR3DTransform" description="SolAR3DTransform component">
 				<interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="9c1052b2-46c0-467b-8363-36f19b6b445f" name="I3DTransform" description="I3DTransform interface"/>
         </component>
   	</module>
 
-        <module uuid="bc1a5b44-d022-4234-8f7a-7e2b72763bad" name="SolARModulePCL" description="SolARModulePCL" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModulePCL/0.9.1/lib/x86_64/shared">
+        <module uuid="bc1a5b44-d022-4234-8f7a-7e2b72763bad" name="SolARModulePCL" description="SolARModulePCL" path="$REMAKEN_PKG_ROOT/packages/SolARBuild/win-cl-14.1/SolARModulePCL/0.9.4/lib/x86_64/shared">
 		<component uuid="c90122f0-b432-4809-bf11-85165298b82d" name="SolARPCFilterCentroid" description="A component based on PCL to filter a point cloud according to a given centroid">
                 <interface uuid="125f2007-1bf9-421d-9367-fbdc1210d006" name="IComponentIntrospect" description="IComponentIntrospect"/>
                 <interface uuid="b293048a-1b04-4598-b2e5-7f485402acc0" name="IPCFilterCentroid" description="Interface for point cloud filtering according to a given 3D point"/>

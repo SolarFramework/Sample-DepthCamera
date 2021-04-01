@@ -7,5 +7,6 @@ node("master") {
         android=false
         linux=false
         makeTarget="install install_deps" 
+        packageScripts="bundleSamples"
     }
 }

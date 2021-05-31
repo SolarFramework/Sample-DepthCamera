@@ -46,11 +46,16 @@ SOURCES += \
     main.cpp
 
 unix {
+    message("------------ This sample is not supported on Unix platform --------------")
+
     LIBS += -ldl
     QMAKE_CXXFLAGS += -DBOOST_LOG_DYN_LINK
 }
 
 macx {
+
+    message("------------ This sample is not supported on Unix platform --------------")
+
     QMAKE_MAC_SDK= macosx
     QMAKE_CXXFLAGS += -fasm-blocks -x objective-c++
 }

@@ -1,5 +1,5 @@
-SolARModuleOpenCV|0.9.4|SolARModuleOpenCV|SolARBuild@github|https://github.com/SolarFramework/SolARModuleOpenCV/releases/download
-SolARModuleTools|0.9.4|SolARModuleTools|SolARBuild@github|https://github.com/SolarFramework/SolARModuleTools/releases/download
-SolARModuleOpenGL|0.9.4|SolARModuleOpenGL|SolARBuild@github|https://github.com/SolarFramework/SolARModuleOpenGL/releases/download
-SolARModuleRealSense|0.9.4|SolARModuleRealSense|SolARBuild@github|https://github.com/SolarFramework/SolARModuleRealSense/releases/download
-SolARModulePCL|0.9.4|SolARModulePCL|SolARBuild@github|https://github.com/SolarFramework/SolARModulePCL/releases
+SolARModuleOpenCV|0.10.0|SolARModuleOpenCV|SolARBuild@github|https://github.com/SolarFramework/SolARModuleOpenCV/releases/download
+SolARModuleTools|0.10.0|SolARModuleTools|SolARBuild@github|https://github.com/SolarFramework/SolARModuleTools/releases/download
+SolARModuleOpenGL|0.10.0|SolARModuleOpenGL|SolARBuild@github|https://github.com/SolarFramework/SolARModuleOpenGL/releases/download
+SolARModuleRealSense|0.10.0|SolARModuleRealSense|SolARBuild@github|https://github.com/SolarFramework/SolARModuleRealSense/releases/download
+SolARModulePCL|0.10.0|SolARModulePCL|SolARBuild@github|https://github.com/SolarFramework/SolARModulePCL/releases

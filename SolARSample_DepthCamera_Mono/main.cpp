@@ -138,17 +138,17 @@ int main(int argc, char **argv) {
                 Transform3Df init_pose = Transform3Df::Identity();
 				///move forward to help ICP to converge in a non minimum local
                 init_pose.translate(Vector3f{ centroid->x(), centroid->y(), centroid->z() + 0.05f }); 
-                transform3D->transformInPlace(init_pose, targetPointCloud);
+                transform3D->transformInPlace(targetPointCloud, init_pose);
                 Transform3Df pose_coarse, pose_fine;
 
                 /// coarse pose estimate
                 icp->estimate(sourcePointCloud, targetPointCloud, pose_coarse);
                 /// update source cloud pose
-                transform3D->transformInPlace(pose_coarse, sourcePointCloud);
+                transform3D->transformInPlace(sourcePointCloud, pose_coarse);
                 // refined pose estimate
                 icpNormals->estimate(sourcePointCloud, targetPointCloud, pose_fine);
-                transform3D->transformInPlace((pose_fine*pose_coarse).inverse(), targetPointCloud);
-                transform3D->transformInPlace((pose_fine*pose_coarse).inverse(), ofilteredPointCloud);
+                transform3D->transformInPlace(targetPointCloud, (pose_fine*pose_coarse).inverse());
+                transform3D->transformInPlace(ofilteredPointCloud, (pose_fine*pose_coarse).inverse());
 			}
 
             // draw mesh overlay

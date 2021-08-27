@@ -154,7 +154,9 @@ int main(int argc, char **argv) {
             // draw mesh overlay
             if (targetPointCloud != nullptr)
             {
-				overlay2DPoints->drawCircles(camera->getWorldToPixels(targetPointCloud->getConstPointCloud()), imageRGB);
+				std::vector<SRef<CloudPoint>> cloudPoints;
+				targetPointCloud->getAllPoints(cloudPoints);
+				overlay2DPoints->drawCircles(camera->getWorldToPixels(cloudPoints), imageRGB);
 				if (debug_3d) {
 					viewer3DPoints->display(ofilteredPointCloud, Transform3Df::Identity(), {}, {}, filteredPointCloud);
 				}

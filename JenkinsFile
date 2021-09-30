@@ -1,7 +1,7 @@
 node("master") {
 
     SolArModulePipeline {
-        moduleName="SolARSample_PipelineDepth"
+        moduleName="SolARSample_DepthCamera"
         dirName="SolARBuild"
         buildDir="SolARSample_DepthCamera_Mono"
         android=false

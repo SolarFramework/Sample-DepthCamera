@@ -6,7 +6,6 @@ node("master") {
         buildDir="SolARSample_DepthCamera_Mono"
         android=false
         linux=false
-        makeTarget="install install_deps" 
         packageScripts="bundleSamples"
     }
 }

@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
 		#pragma endregion
 
 		// load mesh
-		pcLoader->load(pcLoader->bindTo<xpcf::IConfigurable>()->getProperty("filePath")->getStringValue(),meshPointCloud);
+        pcLoader->load(meshPointCloud);
 
         // start depth camera
         if (camera->start() != FrameworkReturnCode::_SUCCESS) {
